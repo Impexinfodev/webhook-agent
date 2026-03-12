@@ -31,7 +31,15 @@ fi
 
 cd "$INSTALL_DIR"
 
-# ── 2. Show free ports (3000–3099) ──────────────────────────
+# ── 2. Detect VPS public IP ─────────────────────────────────
+echo ""
+SERVER_IP=$(curl -s --max-time 5 ifconfig.me 2>/dev/null \
+    || curl -s --max-time 5 api.ipify.org 2>/dev/null \
+    || hostname -I | awk '{print $1}')
+echo -e "${BLUE}── VPS Info ────────────────────────────────────────────${NC}"
+echo -e "${GREEN}Public IP:${NC}  $SERVER_IP"
+
+# ── 3. Show free ports (3000–3099) ──────────────────────────
 echo ""
 echo -e "${BLUE}── Free ports in range 3000–3099 ──────────────────────${NC}"
 
